@@ -1,0 +1,269 @@
+/* custom font */
+@import url('https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&family=Kiwi+Maru&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+// variables
+$bg-white: #F9F7F0;
+$main: #3B5066; // メインカラー
+$primary: #333333; // 本文などに用いるプライマリカラー
+$secondary: #555555;
+$line-color: #CDD9DB; // フォームなどのラインに用いるカラー
+$gray-light: #E5E5E5;
+$accent: #F596AA; // アクセントカラー
+$warning: #E83015;
+$font-family-quoate: 'Tsukushi B Round Gothic';
+
+body {
+    background-color: $main;
+    color: $bg-white;
+    // line-height: 1.2em;
+}
+
+.home {
+    padding-bottom: 70px;
+}
+
+html, div {
+    font-family: 'Gill Sans', 'Gill Sans MT',"Noto Sans JP", "游ゴシック", "Yu Gothic", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "Noto Sans Japanese", Meiryo, sans-serif;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+/* material-icons */
+.material-icons {
+    vertical-align: middle;
+    text-align: center;
+}
+.material-icons.delete {
+    color: $main;
+}
+
+/* 横幅と左右の余白 */
+%container {
+    width: min(92%, 1166px);
+    margin: auto;
+    position: relative;
+}
+
+/* button */
+%btn {
+    border: 2px solid $main;
+    padding: 10px 16px;
+    text-align: center;
+    border-radius: 4px;
+    display: block;
+    margin: auto;
+}
+
+.btn {
+    @extend %btn;
+
+    &__description {
+        display: inline-block;
+        line-height: 24px;
+    }
+}
+
+@mixin overlay() {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+    z-index: -1;
+}
+
+/* header */
+.header {
+    height: 64px;
+    // padding: 1rem 0;
+    color: $bg-white;
+    position: relative;
+    display: flex;
+    vertical-align: middle;
+    &::before {
+        @include overlay()
+    }
+    &__container {
+        @extend %container;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__btn {
+         @extend %btn;
+        display: inline;
+    }
+    &__user {
+        display: inline;
+        margin-right: 24px;
+    }
+}
+
+/* home */
+.home {
+    position: relative;
+    height: 100vh;
+}
+
+/* form */
+.form-container {
+    color: $primary;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+// フォームの枠組み
+.form {
+    display: block;
+    max-width: 480px;
+    border-radius: 5px;
+    background: white;
+    // border: solid 1px $line-color;
+    padding: 32px;
+    margin-bottom: 24px;
+
+    &__btn {
+        @extend %btn;
+        display: inline-block;
+        border: 2px solid $main;
+        margin: 0 8px;
+
+        & > .material-icons {
+            margin-right: 4px;
+        }
+
+        &--update {
+            color: $bg-white;
+            background-color: $main;
+        }
+    }
+}
+
+/* form item */
+.form-item {
+    margin-bottom: 1.2rem;
+
+    &__label {
+        margin-bottom: 10px;
+    }
+
+    &__input {
+        width: 100%;
+        display: block;
+        border-bottom: 1px solid $line-color;
+        padding-left: 0.8em;
+        padding-bottom: 0.2em;
+    }
+
+    &__select-box {
+        border: solid 1px $line-color;
+        border-radius: 5px;
+        padding: 10px 16px;
+        position: relative;
+
+        &::after {
+            display: inline-block;
+            position: absolute;
+            font-family: 'Material Icons';
+            content: #{'"' +'\\' + 'e5c5' + '"'};
+            color: $secondary;
+            font-size: 24px;
+            right: 1rem;
+        }
+    }
+
+    &__has-img {
+        position: relative;
+    }
+
+    &__toggle-switch {
+        text-align: center;
+        --toggle-width: 3.5rem;
+        --toggle-bg-on: #3B5066;
+        --toggle-border-on: #3B5066;
+        position: absolute;
+        right: 0;
+        vertical-align: middle;
+    }
+
+    &__file {
+        border: none;
+    }
+
+}
+
+.error {
+    color: $warning;
+}
+
+/* card container */
+.card-list {
+    overflow-x: auto;
+    white-space: nowrap; // 余白が改行されない = そのまま一行に表示
+    overflow-y: hidden;
+    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+    cursor: pointer;
+}
+
+/* single card */
+$card-width: 220px;
+.card-item {
+    color: $bg-white;
+    display: inline-block;
+    width: $card-width;
+    height: $card-width * 1.136363;
+    // background: rgba($color: #000000, $alpha: .3);
+    // z-index: -300;
+    margin: 20px;
+    border-radius: 5px;
+    position: relative;
+
+    &.single:hover {
+        transform: scale(1.03);
+        transition: all 0.2s ease;
+    }
+    
+    $img-width: 200px;
+    &__img {
+        position: absolute;
+        right: 0;
+        height: $img-width * 1.1;
+        width: $img-width;
+        border-radius: 5px;
+        box-shadow: 3px 3px 3px rgba($color: #000000, $alpha: 0.7);
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+    
+    &__title {
+        z-index: 20;
+        display: inline;
+        position: absolute;
+        bottom: 0;
+        right: $img-width / 2;
+        transform: translate(50%);
+        text-align: center;
+    }
+    &__date {
+        position: absolute;
+        transform: rotate(-90deg);
+        transform-origin: bottom;
+        top: 20px;
+        left: -0.6rem;
+        font-size: 12px;
+    }
+}
+img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -50;
+}

@@ -21,3 +21,12 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# firestore
+src/firebase/*
+
+*css.map
+firestore.rules
+firestore.indexes.json
+storage.rules
+firebase.json

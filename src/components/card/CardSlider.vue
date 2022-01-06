@@ -1,0 +1,63 @@
+<template>
+<div class="block">
+  <h1 class="block__title" :class="category">{{ categoryName(category) }}</h1>
+
+    <ul class="card-list">
+        <li v-for="doc in docs" :key="doc.id" class="card-item single">
+            <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category}}">
+                <SingleCard :doc="doc"/>
+            </router-link>
+
+        </li>
+    </ul>
+</div>
+</template>
+
+<script>
+import { format } from 'date-fns'
+import SingleCard from './SingleCard.vue'
+
+export default {
+    components:{ SingleCard },
+    props: ["uid", "docs", "category"],
+    setup(props) {
+        const categoryName = (category) => {
+            let titleValue
+            if (category === "quick-note") {
+                titleValue = "Quick Note"
+            } else if (category === "art") {
+                titleValue = "アート"
+            } else if (category === "quote") {
+                titleValue = "ことば"
+            } else if (category === "gourmet") {
+                titleValue = "グルメ・ファッション"
+            }
+            return titleValue
+       }
+
+       return { categoryName }
+    }
+}
+
+</script>
+
+<style lang="scss">
+
+.router-link {
+    color: inherit;
+}
+
+.block__title.quick-note {
+    font-family: quicksand, sans-serif;
+}
+.block__title.art {
+    font-family: 'Kaisei Tokumin', serif;
+}
+.block__title.quote {
+    font-family: 'Kiwi Maru','Noto Sans JP', serif;
+}
+.block__title.gourmet {
+    font-family: otomanopee-one, sans-serif;
+}
+
+</style>
