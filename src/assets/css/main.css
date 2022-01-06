@@ -1,0 +1,253 @@
+@charset "UTF-8";
+/* custom font */
+@import url("https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&family=Kiwi+Maru&family=Noto+Sans+JP:wght@400;500;700&display=swap");
+body {
+  background-color: #3B5066;
+  color: #F9F7F0;
+}
+
+.home {
+  padding-bottom: 70px;
+}
+
+html, div {
+  font-family: "Gill Sans", "Gill Sans MT", "Noto Sans JP", "游ゴシック", "Yu Gothic", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "Noto Sans Japanese", Meiryo, sans-serif;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+/* material-icons */
+.material-icons {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.material-icons.delete {
+  color: #3B5066;
+}
+
+/* 横幅と左右の余白 */
+.header__container {
+  width: min(92%, 1166px);
+  margin: auto;
+  position: relative;
+}
+
+/* button */
+.form__btn, .header__btn, .btn {
+  border: 2px solid #3B5066;
+  padding: 10px 16px;
+  text-align: center;
+  border-radius: 4px;
+  display: block;
+  margin: auto;
+}
+
+.btn__description {
+  display: inline-block;
+  line-height: 24px;
+}
+
+/* header */
+.header {
+  height: 64px;
+  color: #F9F7F0;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  vertical-align: middle;
+}
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+.header__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.header__btn {
+  display: inline;
+}
+.header__user {
+  display: inline;
+  margin-right: 24px;
+}
+
+/* home */
+.home {
+  position: relative;
+  height: 100vh;
+}
+
+/* form */
+.form-container {
+  color: #333333;
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.form {
+  display: block;
+  max-width: 480px;
+  border-radius: 5px;
+  background: white;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+.form__btn {
+  display: inline-block;
+  border: 2px solid #3B5066;
+  margin: 0 8px;
+}
+.form__btn > .material-icons {
+  margin-right: 4px;
+}
+.form__btn--update {
+  color: #F9F7F0;
+  background-color: #3B5066;
+}
+
+/* form item */
+.form-item {
+  margin-bottom: 1.2rem;
+}
+.form-item__label {
+  margin-bottom: 10px;
+}
+.form-item__input {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #CDD9DB;
+  padding-left: 0.8em;
+  padding-bottom: 0.2em;
+}
+.form-item__select-box {
+  border: solid 1px #CDD9DB;
+  border-radius: 5px;
+  padding: 10px 16px;
+  position: relative;
+}
+.form-item__select-box::after {
+  display: inline-block;
+  position: absolute;
+  font-family: "Material Icons";
+  content: "\e5c5";
+  color: #555555;
+  font-size: 24px;
+  right: 1rem;
+}
+.form-item__has-img {
+  position: relative;
+}
+.form-item__toggle-switch {
+  text-align: center;
+  --toggle-width: 3.5rem;
+  --toggle-bg-on: #3B5066;
+  --toggle-border-on: #3B5066;
+  position: absolute;
+  right: 0;
+  vertical-align: middle;
+}
+.form-item__file {
+  border: none;
+}
+
+.error {
+  color: #E83015;
+}
+
+/* card container */
+.card-list {
+  overflow-x: auto;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+  cursor: pointer;
+}
+
+/* single card */
+.card-item {
+  color: #F9F7F0;
+  display: inline-block;
+  width: 220px;
+  height: 249.99986px;
+  margin: 20px;
+  border-radius: 5px;
+  position: relative;
+}
+.card-item.single:hover {
+  -webkit-transform: scale(1.03);
+          transform: scale(1.03);
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+.card-item__img {
+  position: absolute;
+  right: 0;
+  height: 220px;
+  width: 200px;
+  border-radius: 5px;
+  -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7);
+          box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.card-item__title {
+  z-index: 20;
+  display: inline;
+  position: absolute;
+  bottom: 0;
+  right: 100px;
+  -webkit-transform: translate(50%);
+          transform: translate(50%);
+  text-align: center;
+}
+.card-item__date {
+  position: absolute;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-transform-origin: bottom;
+          transform-origin: bottom;
+  top: 20px;
+  left: -0.6rem;
+  font-size: 12px;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  z-index: -50;
+}
+/*# sourceMappingURL=main.css.map */
