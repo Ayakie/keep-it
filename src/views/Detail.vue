@@ -138,14 +138,17 @@
 
       <!-- end of the form -->
 
-      <button class="btn form__btn form__btn--update" @click.prevent="handleUpdate">
-          <span class="material-icons update">check_circle</span>
-          <p class="btn__description">更新する</p>
-      </button>
-      <button class="btn form__btn form__btn--delete" @click.prevent="handleDelete">
-          <span class="material-icons delete">delete</span>
-          <p class="btn__description">削除する</p>
-      </button>
+      <div class="btn-container">
+        <button class="btn btn-container__btn--update" @click.prevent="handleUpdate">
+            <span class="material-icons update">check_circle</span>
+            <p class="btn__description">更新する</p>
+        </button>
+        <button class="btn btn-container__btn--delete" @click.prevent="handleDelete">
+            <span class="material-icons delete">delete</span>
+            <p class="btn__description">削除する</p>
+        </button>
+      </div>
+
     </form>
   <BackPage />
   </div>

@@ -46,8 +46,10 @@ html, div {
     padding: 10px 16px;
     text-align: center;
     border-radius: 4px;
-    display: block;
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto
 }
 
 .btn {
@@ -56,6 +58,10 @@ html, div {
     &__description {
         display: inline-block;
         line-height: 24px;
+    }
+
+    & > .material-icons {
+        margin-right: 4px;
     }
 }
 
@@ -125,17 +131,32 @@ html, div {
     padding: 32px;
     margin-bottom: 24px;
 
-    &__btn {
-        @extend %btn;
-        display: inline-block;
-        border: 2px solid $main;
-        margin: 0 8px;
+}
 
+%__btn {
+    @extend %btn;
+    border: 2px solid $main;
+    margin: 0 8px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    &__btn {
+        @extend %__btn;
+    
         & > .material-icons {
             margin-right: 4px;
         }
 
+        &--delete {
+            @extend %__btn;
+        }
+    
         &--update {
+            @extend %__btn;
             color: $bg-white;
             background-color: $main;
         }
@@ -198,4 +219,11 @@ html, div {
 .error {
     color: $warning;
     font-size: 15px;
+}
+
+/* PC layout */
+@media (min-width: 744px) {
+    .form {
+        width: 480px;
+    }
 }
