@@ -173,7 +173,6 @@ export default {
       // storageに画像を格納
       if (file.value) {
         await uploadImg(props.uid, category.value, file.value)
-        data.dataMap['hasImg'] = true
         data.addData({downloadUrl: downloadUrl.value, filePath: filePath.value})
       }
       console.log(data.dataMap);
