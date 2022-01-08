@@ -161,7 +161,6 @@ export default {
     const category = ref(props.category);
     const file = ref(null); //アップロードファイル
     const fileError = ref(null);
-    const imgUrl = ref("");
     const { url: downloadUrl, filePath, error: uploadError, uploadImg } = useStorage();
     const router = useRouter();
     const hasImg = ref(false)
@@ -180,7 +179,7 @@ export default {
         year.value = document.value.year
         body.value = document.value.body
         url.value = document.value.url
-        
+
     })()
 
     // resize textarea
@@ -194,7 +193,7 @@ export default {
 
     const handleUpdate = async () => {
       
-      const data = new DataClass(timestamp(), author.value, body.value, url.value, imgUrl.value)
+      const data = new DataClass(timestamp(), author.value, body.value, url.value)
 
       // storageに画像を格納
       if (file.value) {

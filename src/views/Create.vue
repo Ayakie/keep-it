@@ -151,7 +151,6 @@ export default {
     const category = ref("quick-note");
     const file = ref(null); //アップロードファイル
     const fileError = ref(null);
-    const imgUrl = ref("");
     const { url: downloadUrl, filePath, error: uploadError, uploadImg } = useStorage();
     const { error: addError, _addDoc } = useCollection();
     const router = useRouter();
@@ -169,7 +168,7 @@ export default {
     // handle submit
     const addData = async () => {
       
-      const data = new DataClass(timestamp(), author.value, body.value, url.value, imgUrl.value)
+      const data = new DataClass(timestamp(), author.value, body.value, url.value)
 
       // storageに画像を格納
       if (file.value) {
