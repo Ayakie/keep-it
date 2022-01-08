@@ -25,10 +25,6 @@ export default {
 
 <style lang="scss" scoped>
 @use '../assets/sass/main';
-#app {
-    background-color: main.$bg-white;
-    color: main.$primary;
-}
 .title {
     margin-bottom: 24px;
 }

@@ -119,6 +119,7 @@ html, div {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background: $bg-white;
 }
 
 // フォームの枠組み
@@ -127,7 +128,7 @@ html, div {
     max-width: 480px;
     border-radius: 5px;
     background: white;
-    // border: solid 1px $line-color;
+    border: solid 1px $line-color;
     padding: 32px;
     margin-bottom: 24px;
 

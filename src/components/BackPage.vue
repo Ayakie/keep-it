@@ -30,7 +30,7 @@ export default {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    color: main.$bg-white;
+    color: main.$main;
 
     &__description {
         line-height: 24px;
