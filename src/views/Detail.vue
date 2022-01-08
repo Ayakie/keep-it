@@ -174,7 +174,6 @@ export default {
   props: ["id", "uid", "category"],
 
   setup(props) {
-    console.log(props.category);
 
     const title = ref("");
     const author = ref("");
@@ -191,6 +190,7 @@ export default {
     const toggle = ref(false);
     const toggleLabel = ref("")
     const checked = ref(false);
+    const hasImg = ref(null)
 
     const path = `users/${props.uid}/${props.category}/${props.id}`
     const { error: fetchError, document, _getDoc } = getDocument(path)
@@ -206,7 +206,7 @@ export default {
         year.value = document.value.year
         body.value = document.value.body
         url.value = document.value.url
-        const hasImg = ref(document.value.hasImg)
+        hasImg.value = document.value.hasImg
         toggleLabel.value = hasImg.value ? "画像を登録し直す" : "画像を登録する"
     })()
 
@@ -221,28 +221,42 @@ export default {
 
     const handleUpdate = async () => {
 
-      // validation
       fileErrors.value =[]
       bodyErrors.value = []
 
+      // file validation
       if (toggle.value && !file.value && !checked.value) {
+
           fileErrors.value.push('画像が選択されていません')
 
       } else if (toggle.value && file.value && checked.value) {
+
           fileErrors.value.push('画像を削除するか、新しい画像を選択してください')
+
       }
+
+      // body validation
       if (category.value === "quick-note" && !body.value) {
+
         bodyErrors.value.push('メモは必須です')
+
       } else if (category.value === "quote" && !body.value) {
+
         bodyErrors.value.push('本文は必須です')
       }
 
       // データインスタンスの作成
       const data = new DataClass(document.value.createdAt, author.value, body.value, url.value)
 
-      // storageに画像を格納
-      if (file.value) {
+      if (hasImg.value && !toggle.value) {
 
+        // 元の画像データを登録
+        data.addData({downloadUrl: document.value.downloadUrl, filePath: document.value.filePath})
+        data.dataMap['hasImg'] = true
+
+        } else if (file.value) {
+        
+        // storageに画像を格納
         await uploadImg(props.uid, category.value, file.value)
 
         // データインスタンスの更新
@@ -257,29 +271,40 @@ export default {
         data.dataMap['hasImg'] = false
       }
 
+      // category fieldを追加
       if (category.value === "art") {
-          data.addData({title: title.value, year: year.value})
+
+        data.addData({title: title.value, year: year.value})
+
       } else if (category.value === "gourmet") {
+
           data.addData({title: title.value})
+
       }
-    
+
       // データ更新
       if (!fileErrors.value.length && !bodyErrors.value.length) {
+
           await _updateDoc(data.dataMap)
       }
 
       if (!updateError.value && !fileErrors.value.length && !bodyErrors.value.length) {
+
           console.log('data updated')
           router.push({ name: 'Home' })
+
       }
     };
 
     const handleDelete = async () => {
+
         await _deleteDoc()
 
         if (!updateError.value) {
+
             console.log('data deleted')
             router.push({ name: 'Home' })
+
         }
     }
 
@@ -292,26 +317,37 @@ export default {
       file.value = null
 
       if (selected && types.includes(selected.type)) {
+
         file.value = selected;
         fileErrors.value = [];
+
       } else if (!selected) {
+
           return
+
       } else {
+
         fileErrors.value.push("Sorry...\n 有効なファイル形式はpngまたはjpegです");
         file.value = null;
+
       }
     };
 
     const toggleChange = () => {
+
         fileErrors.value = []
         checked.value = false
+
     }
 
     const changeCheckbox = () => {
+
         fileErrors.value = []
+
         if (checked) {
             file.value = null
         }
+
     }
 
     return {

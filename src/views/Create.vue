@@ -157,7 +157,7 @@ export default {
   props: ["uid"],
 
   setup(props) {
-    console.log(props.uid);
+
     const title = ref("");
     const author = ref("");
     const year = ref("");
@@ -190,12 +190,19 @@ export default {
       bodyErrors.value = []
 
       if (toggle.value && !file.value) {
+
         fileErrors.value.push('画像が選択されていません')
+
       }
+
       if (category.value === "quick-note" && !body.value) {
+
         bodyErrors.value.push('メモは必須です')
+
       } else if (category.value === "quote" && !body.value) {
+
         bodyErrors.value.push('本文は必須です')
+
       }
 
       // データインスタンスの作成
@@ -209,24 +216,33 @@ export default {
         // データインスタンスの更新
         data.dataMap['hasImg'] = true
         data.addData({downloadUrl: downloadUrl.value, filePath: filePath.value})
+
       }
-      console.log(data.dataMap);
 
       // データ作成
       if (category.value === "art") {
+
         data.addData({title: title.value, year: year.value})
+
       } else if (category.value === "gourmet") {
+
         data.addData({title: title.value})
+
       }
       
       // データ追加
       if (!fileErrors.value.length && !bodyErrors.value.length) {
+
         await _addDoc(`users/${props.uid}/${category.value}`, data.dataMap)
+
       }
 
+      // ホームへリダイレクト
       if (!addError.value && !fileErrors.value.length && !bodyErrors.value.length) {
+
         console.log('data added')
         router.push({ name: 'Home' })
+
       }
     };
 
@@ -234,23 +250,22 @@ export default {
     const types = ["image/png", "image/jpeg", "image/svg+xml"];
 
     const fileChange = (e) => {
+
       const selected = e.target.files[0];
       fileErrors.value = [];
 
       if (selected && types.includes(selected.type)) {
+
         fileErrors.value = [];
         file.value = selected;
 
       } else {
+
         file.value = null;
         fileErrors.value.push("Sorry...\n 有効なファイル形式はpngまたはjpegです");
+
       }
     };
-
-    const toggleChange = () => {
-      fileErrors.value = []
-    }
-
 
     return {
       category,
