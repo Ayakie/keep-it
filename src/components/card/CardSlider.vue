@@ -47,6 +47,9 @@ export default {
     color: inherit;
 }
 
+.block__title {
+    margin-left: 20px;
+}
 .block__title.quick-note {
     font-family: quicksand, sans-serif;
 }
