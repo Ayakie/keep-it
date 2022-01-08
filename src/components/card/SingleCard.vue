@@ -2,15 +2,17 @@
 <p class="card-item__date">
     {{ createdTime }}
 </p>
-<div class="card-item__img">
+<div class="card-item__img" :class="{hasImg: doc.downloadUrl}">
     <img :src="doc.downloadUrl" v-if="doc.downloadUrl">
     <div class="caption">
-        <h3> {{doc.author }} </h3>
-        <blockquote :class="{ caption__quote: category==='quote' }">
+        <blockquote class="caption__blockquote"
+        :class="{ quote: category==='quote' }"
+        >
             <p> {{ snippet }} </p>
 
             <!-- <img src="../../assets/quotation.svg" alt="" srcset=""> -->
         </blockquote>
+        <p class="caption__author"> {{doc.author }} </p>
         
     </div>
 </div>
@@ -73,6 +75,8 @@ $card-width: 220px;
     // 画像サイズ
     $img-width: 200px;
     &__img {
+        background: rgba($color: main.$bg-white, $alpha: 1.0);
+        color: main.$primary;
         position: relative;
         left: $card-width - $img-width;
         height: $img-width * 1.1;
@@ -119,23 +123,22 @@ $card-width: 220px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: 0.5s;
-    // background-color: rgba(0,0,0,0);
-    opacity: 1;
-    background: rgba($color: #000000, $alpha: 0);
+    // opacity: 1;
+    // background: rgba($color: #000000, $alpha: 0);
     white-space: normal;
 
-    &__quote {
+    &__blockquote {
         position: relative;
-        // padding: 0 1rem ;
+        padding: 0.5rem;
+        font-size: 15px;
     }
-    &__quote p{
-        text-indent: 1.5rem;
+    &__blockquote.quote p{
+        text-indent: 1.2rem;
 
         // quotation svg
         &::before {
             content: "";
-            background-color: main.$gray-light;
+            background-color: main.$secondary;
             mask: url("../../assets/quotation.svg");
             // 画像の大きさ
             display: inline-block;
@@ -145,13 +148,13 @@ $card-width: 220px;
             // 位置
             position: absolute;
             top: 0;
-            left: 0;
-            z-index: -1;
+            left: 0.5rem;
+            z-index: 1;
         }
 
         &::after {
             content: "";
-            background-color: main.$gray-light;
+            background-color: main.$secondary;
             mask: url("../../assets/quotation.svg");
             // 画像の大きさ
             display: inline-block;
@@ -161,10 +164,26 @@ $card-width: 220px;
             // 位置
             position: absolute;
             bottom: 0;
-            right: 0;
-            z-index: -1;
+            right: 0.5rem;
+            z-index: 1;
             transform: scale(-1,-1);
         }
     }
 }
+
+/* 画像がある場合にオーバーレイ */
+.card-item__img.hasImg {
+    color: main.$bg-white;
+
+    & .caption {
+        transition: all 0.5s;
+        opacity: 0;
+        background: rgba($color: #000000, $alpha: 0);
+    }
+    &:hover .caption {
+        opacity: 1;
+        background: rgba($color: #000000, $alpha: 0.5);
+    }
+}
+
 </style>
