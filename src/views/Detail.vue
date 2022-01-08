@@ -22,7 +22,7 @@
           type="text"
           placeholder="夜のプロヴァンスの田舎道"
           v-model="title"
-        required/>
+        />
       </div>
       <div class="form-item" v-if="category === 'gourmet'">
         <p class="form-item__label">アイテム名</p>
@@ -74,6 +74,14 @@
           v-model="body"
           ref="area"
         ></textarea>
+        <!-- validation -->
+        <div class="error" v-if="!body">
+          <ul>
+            <li v-for="error in bodyErrors" :key="error">
+              {{ error }}
+            </li>
+          </ul>
+        </div>
       </div>
 
       <!-- url（参考URLなど） -->
@@ -90,26 +98,38 @@
       <!-- toggle switch -->
       <div class="form-item">
         <div class="form-item__has-img">
-          <label for="hasImg">画像を置き換える</label>
+          <label for="toggle">{{ toggleLabel }}</label>
           <Toggle
-            v-model="hasImg"
-            id="hasImg"
+            v-model="toggle"
+            id="toggle"
             on-label="はい"
             off-label="いいえ"
             class="form-item__toggle-switch"
+            @change="toggleChange"
           />
         </div>
       </div>
 
       <!-- upload file -->
+      <div class="form-item" v-if="toggle && document.downloadUrl">
+          <input type="checkbox" name="" id="checkbox" v-model="checked" @change="changeCheckbox">
+          <label for="checkbox"> 現在の画像を削除する</label>
+      </div>
       <div class="form-item">
         <input
           type="file"
           class="form-item__file"
-          v-if="hasImg"
+          v-if="toggle"
           @change="fileChange"
-         required/>
-        <div class="error" v-if="hasImg">{{ fileError }}</div>
+         />
+
+        <div class="error" v-if="fileErrors.length">
+            <ul>
+                <li v-for="error in fileErrors" :key="error">
+                    {{ error }}
+                </li>
+            </ul>
+        </div>
       </div>
       <!-- 星評価 -->
       <!-- <div class="form-item">
@@ -137,8 +157,6 @@ import { ref } from "@vue/reactivity";
 import Toggle from "@vueform/toggle";
 import { nextTick, watch } from "@vue/runtime-core";
 import useStorage from "@/composables/useStorage";
-import useCollection from "@/composables/useCollection";
-import { timestamp } from "@/firebase/config";
 import DataClass from "@/composables/makeData";
 import { useRouter } from 'vue-router';
 import BackPage from '@/components/BackPage.vue'
@@ -156,14 +174,17 @@ export default {
     const author = ref("");
     const year = ref("");
     const body = ref("");
+    const bodyErrors = ref([]);
     const url = ref("");
     const area = ref(null);
     const category = ref(props.category);
     const file = ref(null); //アップロードファイル
-    const fileError = ref(null);
+    const fileErrors = ref([]);
     const { url: downloadUrl, filePath, error: uploadError, uploadImg } = useStorage();
     const router = useRouter();
-    const hasImg = ref(false)
+    const toggle = ref(false);
+    const toggleLabel = ref("")
+    const checked = ref(false);
 
     const path = `users/${props.uid}/${props.category}/${props.id}`
     const { error: fetchError, document, _getDoc } = getDocument(path)
@@ -179,7 +200,8 @@ export default {
         year.value = document.value.year
         body.value = document.value.body
         url.value = document.value.url
-
+        const hasImg = ref(document.value.hasImg)
+        toggleLabel.value = hasImg.value ? "画像を登録し直す" : "画像を登録する"
     })()
 
     // resize textarea
@@ -192,29 +214,57 @@ export default {
     watch(body, () => resize());
 
     const handleUpdate = async () => {
-      
-      const data = new DataClass(timestamp(), author.value, body.value, url.value)
+
+      // validation
+      fileErrors.value =[]
+      bodyErrors.value = []
+
+      if (toggle.value && !file.value && !checked.value) {
+          fileErrors.value.push('画像が選択されていません')
+
+      } else if (toggle.value && file.value && checked.value) {
+          fileErrors.value.push('画像を削除するか、新しい画像を選択してください')
+      }
+      if (category.value === "quick-note" && !body.value) {
+        bodyErrors.value.push('メモは必須です')
+      } else if (category.value === "quote" && !body.value) {
+        bodyErrors.value.push('本文は必須です')
+      }
+
+      // データインスタンスの作成
+      const data = new DataClass(document.value.createdAt, author.value, body.value, url.value)
 
       // storageに画像を格納
       if (file.value) {
+
         await uploadImg(props.uid, category.value, file.value)
+
+        // データインスタンスの更新
+        data.dataMap['hasImg'] = true
         data.addData({downloadUrl: downloadUrl.value, filePath: filePath.value})
-      }
-      console.log(data.dataMap);
 
-      // データ作成
+      } else if (checked) {
+
+        // 現在の画像を削除する場合、urlを削除
+        // todo: storageデータの削除
+        data.addData({downloadUrl: "", filePath: ""})
+        data.dataMap['hasImg'] = false
+      }
+
       if (category.value === "art") {
-        data.addData({title: title.value, year: year.value})
+          data.addData({title: title.value, year: year.value})
       } else if (category.value === "gourmet") {
-        data.addData({title: title.value})
+          data.addData({title: title.value})
       }
-      
+    
       // データ更新
-      await _updateDoc(data.dataMap)
+      if (!fileErrors.value.length && !bodyErrors.value.length) {
+          await _updateDoc(data.dataMap)
+      }
 
-      if (!updateError.value) {
-        console.log('data updated')
-        router.push({ name: 'Home' })
+      if (!updateError.value && !fileErrors.value.length && !bodyErrors.value.length) {
+          console.log('data updated')
+          router.push({ name: 'Home' })
       }
     };
 
@@ -232,34 +282,51 @@ export default {
 
     const fileChange = (e) => {
       const selected = e.target.files[0];
+      fileErrors.value = [];
+      file.value = null
 
       if (selected && types.includes(selected.type)) {
         file.value = selected;
-        fileError.value = null;
+        fileErrors.value = [];
+      } else if (!selected) {
+          return
       } else {
+        fileErrors.value.push("Sorry...\n 有効なファイル形式はpngまたはjpegです");
         file.value = null;
-        fileError.value = "Sorry...\n 有効なファイル形式はpngまたはjpegです";
       }
     };
+
+    const toggleChange = () => {
+        fileErrors.value = []
+        checked.value = false
+    }
+
+    const changeCheckbox = () => {
+        fileErrors.value = []
+        if (checked) {
+            file.value = null
+        }
+    }
 
     return {
       category,
       title,
       author,
       year,
-      body,
+      body, bodyErrors,
       url,
-      area,
+      area, checked,
+      toggleLabel,
+      toggleChange, changeCheckbox,
       handleUpdate, handleDelete,
       fileChange,
-      fileError, hasImg
+      fileErrors, toggle,
+      document
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.form-item__toggle-switch {
-    --toggle-width: 4rem;
-}
+
 </style>

@@ -5,7 +5,7 @@
       <div class="form-item">
         <p class="form-item__label">カテゴリ</p>
         <div class="form-item__select-box">
-          <select name="" id="" v-model="category">
+          <select name="" id="" v-model="category" @change="bodyErrors = []">
             <option value="quick-note" selected>Quick Note</option>
             <option value="art">アート</option>
             <option value="quote">ことば</option>
@@ -79,6 +79,15 @@
           v-model="body"
           ref="area"
         ></textarea>
+
+        <!-- validation -->
+        <div class="error" v-if="!body">
+          <ul>
+            <li v-for="error in bodyErrors" :key="error">
+              {{ error }}
+            </li>
+          </ul>
+        </div>
       </div>
 
       <!-- url（参考URLなど） -->
@@ -95,13 +104,14 @@
       <!-- toggle switch -->
       <div class="form-item">
         <div class="form-item__has-img">
-          <label for="hasImg">画像あり</label>
+          <label for="toggle">画像を登録する</label>
           <Toggle
-            v-model="hasImg"
-            id="hasImg"
-            on-label="あり"
-            off-label="なし"
+            v-model="toggle"
+            id="toggle"
+            on-label="はい"
+            off-label="いいえ"
             class="form-item__toggle-switch"
+            @change="fileErrors = []"
           />
         </div>
       </div>
@@ -111,10 +121,16 @@
         <input
           type="file"
           class="form-item__file"
-          v-if="hasImg"
+          v-if="toggle"
           @change="fileChange"
-         required/>
-        <div class="error" v-if="hasImg">{{ fileError }}</div>
+         />
+        <div class="error" v-if="fileErrors.length">
+            <ul>
+                <li v-for="error in fileErrors" :key="error">
+                    {{ error }}
+                </li>
+            </ul>
+        </div>
       </div>
       <!-- end of the form -->
 
@@ -146,15 +162,16 @@ export default {
     const author = ref("");
     const year = ref("");
     const body = ref("");
+    const bodyErrors = ref([]);
     const url = ref("");
     const area = ref(null);
     const category = ref("quick-note");
     const file = ref(null); //アップロードファイル
-    const fileError = ref(null);
+    const fileErrors = ref([]);
     const { url: downloadUrl, filePath, error: uploadError, uploadImg } = useStorage();
     const { error: addError, _addDoc } = useCollection();
     const router = useRouter();
-    const hasImg = ref(false)
+    const toggle = ref(false)
 
     // resize textarea
     const resize = () => {
@@ -167,12 +184,30 @@ export default {
 
     // handle submit
     const addData = async () => {
-      
-      const data = new DataClass(timestamp(), author.value, body.value, url.value)
+            
+      // validation
+      fileErrors.value = []
+      bodyErrors.value = []
 
+      if (toggle.value && !file.value) {
+        fileErrors.value.push('画像が選択されていません')
+      }
+      if (category.value === "quick-note" && !body.value) {
+        bodyErrors.value.push('メモは必須です')
+      } else if (category.value === "quote" && !body.value) {
+        bodyErrors.value.push('本文は必須です')
+      }
+
+      // データインスタンスの作成
+      const data = new DataClass(timestamp(), author.value, body.value, url.value)
+      
       // storageに画像を格納
       if (file.value) {
+
         await uploadImg(props.uid, category.value, file.value)
+
+        // データインスタンスの更新
+        data.dataMap['hasImg'] = true
         data.addData({downloadUrl: downloadUrl.value, filePath: filePath.value})
       }
       console.log(data.dataMap);
@@ -185,9 +220,11 @@ export default {
       }
       
       // データ追加
-      await _addDoc(`users/${props.uid}/${category.value}`, data.dataMap)
+      if (!fileErrors.value.length && !bodyErrors.value.length) {
+        await _addDoc(`users/${props.uid}/${category.value}`, data.dataMap)
+      }
 
-      if (!addError.value) {
+      if (!addError.value && !fileErrors.value.length && !bodyErrors.value.length) {
         console.log('data added')
         router.push({ name: 'Home' })
       }
@@ -198,27 +235,34 @@ export default {
 
     const fileChange = (e) => {
       const selected = e.target.files[0];
+      fileErrors.value = [];
 
       if (selected && types.includes(selected.type)) {
+        fileErrors.value = [];
         file.value = selected;
-        fileError.value = null;
+
       } else {
         file.value = null;
-        fileError.value = "Sorry...\n 有効なファイル形式はpngまたはjpegです";
+        fileErrors.value.push("Sorry...\n 有効なファイル形式はpngまたはjpegです");
       }
     };
+
+    const toggleChange = () => {
+      fileErrors.value = []
+    }
+
 
     return {
       category,
       title,
       author,
       year,
-      body,
+      body, bodyErrors,
       url,
       area,
       addData,
       fileChange,file,
-      fileError, hasImg
+      fileErrors, toggle,
     };
   },
 };

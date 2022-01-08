@@ -181,7 +181,7 @@ html, div {
 
     &__toggle-switch {
         text-align: center;
-        --toggle-width: 3.5rem;
+        --toggle-width: 4rem;
         --toggle-bg-on: #3B5066;
         --toggle-border-on: #3B5066;
         position: absolute;
@@ -197,4 +197,5 @@ html, div {
 
 .error {
     color: $warning;
+    font-size: 15px;
 }
