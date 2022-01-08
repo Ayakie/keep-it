@@ -11,6 +11,14 @@ class DataClass {
 
     addData(data) {
         this.dataMap =  {...this.dataMap, ...data}
+        // データがない（undefined）場合、"" で置き換える
+        for (const key in this.dataMap) {
+            if (Object.hasOwnProperty.call(this.dataMap, key)) {
+                if (!this.dataMap[key]) {
+                    this.dataMap[key] = ""
+                }
+            }
+        }
     }
 }
 
