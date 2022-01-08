@@ -3,10 +3,10 @@
     <Navbar />
     <!-- <CardSlider :uid="user.uid"/> -->
     <Bottombar :uid="user.uid" v-if="user"/>
-    <CardSlider :uid="user.uid" :docs="docNote" :category="'quick-note'" v-if="docNote.length"/>
-    <CardSlider :uid="user.uid" :docs="docArt" :category="'art'" v-if="docArt.length"/>
-    <CardSlider :uid="user.uid" :docs="docQuote" :category="'quote'" v-if="docQuote.length"/>
-    <CardSlider :uid="user.uid" :docs="docGourmet" :category="'gourmet'" v-if="docGourmet.length"/>
+    <CardSlider :uid="user.uid" :docs="docNote" :category="'quick-note'" v-if="docNote.length && user"/>
+    <CardSlider :uid="user.uid" :docs="docArt" :category="'art'" v-if="docArt.length && user"/>
+    <CardSlider :uid="user.uid" :docs="docQuote" :category="'quote'" v-if="docQuote.length && user"/>
+    <CardSlider :uid="user.uid" :docs="docGourmet" :category="'gourmet'" v-if="docGourmet.length && user"/>
 </div>
 </template>
 
