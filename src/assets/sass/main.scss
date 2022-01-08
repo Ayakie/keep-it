@@ -18,10 +18,6 @@ body {
     // line-height: 1.2em;
 }
 
-.home {
-    padding-bottom: 70px;
-}
-
 html, div {
     font-family: 'Gill Sans', 'Gill Sans MT',"Noto Sans JP", "游ゴシック", "Yu Gothic", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "Noto Sans Japanese", Meiryo, sans-serif;
     overflow: hidden;
@@ -105,6 +101,7 @@ html, div {
 .home {
     position: relative;
     height: 100vh;
+    padding-bottom: 55px;
 }
 
 /* form */
@@ -200,70 +197,4 @@ html, div {
 
 .error {
     color: $warning;
-}
-
-/* card container */
-.card-list {
-    overflow-x: auto;
-    white-space: nowrap; // 余白が改行されない = そのまま一行に表示
-    overflow-y: hidden;
-    overflow-scrolling: touch;
-    -webkit-overflow-scrolling: touch;
-    cursor: pointer;
-}
-
-/* single card */
-$card-width: 220px;
-.card-item {
-    color: $bg-white;
-    display: inline-block;
-    width: $card-width;
-    height: $card-width * 1.136363;
-    // background: rgba($color: #000000, $alpha: .3);
-    // z-index: -300;
-    margin: 20px;
-    border-radius: 5px;
-    position: relative;
-
-    &.single:hover {
-        transform: scale(1.03);
-        transition: all 0.2s ease;
-    }
-    
-    $img-width: 200px;
-    &__img {
-        position: absolute;
-        right: 0;
-        height: $img-width * 1.1;
-        width: $img-width;
-        border-radius: 5px;
-        box-shadow: 3px 3px 3px rgba($color: #000000, $alpha: 0.7);
-        transition: all 0.3s ease;
-        overflow: hidden;
-    }
-    
-    &__title {
-        z-index: 20;
-        display: inline;
-        position: absolute;
-        bottom: 0;
-        right: $img-width / 2;
-        transform: translate(50%);
-        text-align: center;
-    }
-    &__date {
-        position: absolute;
-        transform: rotate(-90deg);
-        transform-origin: bottom;
-        top: 20px;
-        left: -0.6rem;
-        font-size: 12px;
-    }
-}
-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -50;
 }

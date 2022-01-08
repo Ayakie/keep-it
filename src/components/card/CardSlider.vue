@@ -5,7 +5,7 @@
     <ul class="card-list">
         <li v-for="doc in docs" :key="doc.id" class="card-item single">
             <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category}}">
-                <SingleCard :doc="doc"/>
+                <SingleCard :doc="doc" :category="category"/>
             </router-link>
 
         </li>
@@ -63,4 +63,14 @@ export default {
     font-family: otomanopee-one, sans-serif;
 }
 
+/* card container */
+.card-list {
+    overflow-x: auto;
+    white-space: nowrap; // 余白が改行されない = そのまま一行に表示
+    overflow-y: hidden;
+    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
 </style>
