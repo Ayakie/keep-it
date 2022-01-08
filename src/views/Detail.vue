@@ -86,7 +86,10 @@
 
       <!-- url（参考URLなど） -->
       <div class="form-item">
-        <p class="form-item__label">URL</p>
+        <p class="form-item__label">
+          <a :href="url" v-if="url" target="_blank">URL</a>
+          <span v-else>URL</span>
+        </p>
         <input
           class="form-item__input"
           type="url"
