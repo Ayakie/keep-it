@@ -87,8 +87,9 @@
       <!-- url（参考URLなど） -->
       <div class="form-item">
         <p class="form-item__label">
-          <a :href="url" v-if="url" target="_blank">URL</a>
-          <span v-else>URL</span>
+          <a :href="url" v-if="url" target="_blank">
+            <span class="material-icons link">link</span>リンク</a>
+          <span v-else>リンク</span>
         </p>
         <input
           class="form-item__input"
@@ -370,5 +371,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.material-icons.link {
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
 </style>

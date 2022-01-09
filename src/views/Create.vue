@@ -90,9 +90,9 @@
         </div>
       </div>
 
-      <!-- url（参考URLなど） -->
+      <!-- url（参考リンクなど） -->
       <div class="form-item">
-        <p class="form-item__label">URL</p>
+        <p class="form-item__label">リンク</p>
         <input
           class="form-item__input"
           type="url"

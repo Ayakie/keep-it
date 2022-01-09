@@ -12,7 +12,10 @@
 
             <!-- <img src="../../assets/quotation.svg" alt="" srcset=""> -->
         </blockquote>
-        <p class="caption__author"> {{doc.author }} </p>
+        <p class="caption__author">
+            {{doc.author }}
+            <span v-if="doc.year"> ({{doc.year}}) </span>
+        </p>
         
     </div>
 </div>
