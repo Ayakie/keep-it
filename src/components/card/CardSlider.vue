@@ -1,10 +1,13 @@
 <template>
 <div class="block">
-  <h1 class="block__title" :class="category">{{ categoryName(category) }}</h1>
+
+    <router-link class="router-link" :to="{name: 'ListView', params: {uid: uid, category: category}}">
+        <h1 class="block__title" :class="category">{{ categoryName(category) }}</h1>
+    </router-link>
 
     <ul class="card-list">
         <li v-for="doc in docs" :key="doc.id" class="card-item single">
-            <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category}}">
+            <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category, goBack:true}}">
                 <SingleCard :doc="doc" :category="category"/>
             </router-link>
 
@@ -48,10 +51,12 @@ export default {
 
 .router-link {
     color: inherit;
+    text-decoration: none;
 }
 
 .block__title {
     margin-left: 20px;
+    display: inline-block;
 }
 .block__title.quick-note {
     font-family: quicksand, sans-serif;

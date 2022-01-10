@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Welcome from '../views/Welcome.vue'
 import Create from '../views/Create.vue'
 import Detail from '../views/Detail.vue'
+import ListView from '../views/ListView.vue'
 
 const routes = [
     {
@@ -25,6 +26,12 @@ const routes = [
         path: '/detail/:id',
         name: 'Detail',
         component: Detail,
+        props: true
+    },
+    {
+        path: '/view/:category',
+        name: 'ListView',
+        component: ListView,
         props: true
     }
 ]
