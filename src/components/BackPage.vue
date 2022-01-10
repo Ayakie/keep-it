@@ -36,6 +36,13 @@ export default {
 <style lang="scss">
 @use '../assets/sass/main';
 
+.material-icons.back {
+    position: absolute;
+    right: 51%;
+    transform: translateX(-50%);
+    transition: all 0.2s linear;
+}
+
 .back {
     display: flex;
     justify-content: center;
@@ -46,8 +53,9 @@ export default {
     &__description {
         line-height: 24px;
     }
-}
-.material-icons.back {
-    margin-right: 8px;
+
+    &:hover .material-icons.back {
+        right: 52%;
+    }
 }
 </style>
