@@ -9,7 +9,7 @@
     <!-- カードリスト -->
     <ul class="card-list">
         <li v-for="(doc, idx) in docs" :key="doc.id" class="card-item single">
-            <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category, goBack:true}}">
+            <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category, goBack:'Home'}}">
                 <SingleCard :doc="doc" :category="category" :idx="idx"/>
             </router-link>
 

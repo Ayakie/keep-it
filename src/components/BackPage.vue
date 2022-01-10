@@ -14,13 +14,13 @@ export default {
     setup(props) {
         const router = useRouter()
         const handleClick = () => {
-            console.log(props.goBack)
-
-            if (props.goBack === 'true') {
+            
+            if (props.goBack === 'Home') {
+                console.log(props.goBack)
 
                 router.go(-1)
 
-            } else {
+            } else if (props.goBack === 'ListView') {
                 console.log(props.uid)
                 router.push({name: 'ListView', params: {uid: props.uid, category: props.category}})
 

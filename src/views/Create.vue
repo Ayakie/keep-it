@@ -136,7 +136,7 @@
 
       <button class="btn">登録する</button>
     </form>
-  <BackPage />
+  <BackPage :goBack="'Home'"/>
   </div>
   
 </template>

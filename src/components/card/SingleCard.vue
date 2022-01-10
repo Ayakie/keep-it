@@ -113,6 +113,7 @@ $card-width: 220px;
         top: 20px;
         left: -0.6rem;
         font-size: 12px;
+        font-weight: 100;
     }
 }
 

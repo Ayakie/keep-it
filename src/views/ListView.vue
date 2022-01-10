@@ -22,7 +22,7 @@
                     </div>
                     <img :src="doc.downloadUrl" v-if="doc.downloadUrl">
                 </div>
-                <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category, goBack:false}}">
+                <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category, goBack:'ListView'}}">
                     <p class="left__edit">編集する</p>
                 </router-link>
             </div>
@@ -32,8 +32,8 @@
                 <div class="right__head head">
                     <!-- タイトル、著者、年 -->
                     <div class="head__title">
-                        <h3 v-if="doc.title">「{{doc.title}}」</h3>
-                        <p class="head__author">{{doc.author}}
+                        <h3 v-if="doc.title" class="head__title--title">「{{doc.title}}」</h3>
+                        <p class="head__title--author">{{doc.author}}
                             <span v-if="doc.year">({{doc.year}})</span>
                         </p>
                     </div>
@@ -189,17 +189,19 @@ $img-width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 
     &__title {
         font-weight: 300;
         margin-right: 8px;
-    }
 
-    &__author {
-        font-weight: 100;
-        font-size: 12px;
-        // margin-top: 8px;
+        &--title {
+            margin-bottom: 4px;
+        }
+
+        &--author {
+            font-weight: 100;
+        }
     }
 }
 
