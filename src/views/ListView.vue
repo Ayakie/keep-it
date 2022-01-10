@@ -23,7 +23,7 @@
                     <img :src="doc.downloadUrl" v-if="doc.downloadUrl">
                 </div>
                 <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category, goBack:'ListView'}}">
-                    <p class="left__edit">編集する</p>
+                    <span class="left__edit">編集する</span>
                 </router-link>
             </div>
 
@@ -176,6 +176,26 @@ $img-width: 100px;
     &__edit {
         width: $img-width;
         text-align: center;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 4px;
+
+        // 下線
+        &::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            bottom: 0;
+            left: 24px;
+            transition: all 0.2s linear;
+            background-color: main.$accent;
+            height: 1px;
+        }
+
+        &:hover::after {
+            width: 50%;
+
+        }
     }
 }
 
@@ -206,7 +226,12 @@ $img-width: 100px;
 }
 
 .head__link {
-    color: white;
+    color: main.$bg-white;
+    transition: all 0.2s;
+
+    &:hover {
+        color: main.$accent;
+    }
 }
 
 /* PC layout */
@@ -240,6 +265,10 @@ $img-width: 100px;
 
         &__edit {
             width: $img-width;
+
+            &::after {
+                left: 30px;
+            }
         }
     }
 

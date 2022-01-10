@@ -87,8 +87,9 @@
       <!-- url（参考URLなど） -->
       <div class="form-item">
         <p class="form-item__label">
-          <a :href="url" v-if="url" target="_blank">
-            <span class="material-icons link">link</span>リンク</a>
+          <a :href="url" v-if="url" target="_blank" class="form-item__label--link">
+            <span class="material-icons link">link</span>
+            リンク</a>
           <span v-else>リンク</span>
         </p>
         <input
@@ -370,9 +371,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@use '/src/assets/sass/main';
+
 .material-icons.link {
   margin-right: 4px;
   margin-bottom: 4px;
+  transition: all 0.2s;
+}
+
+.form-item__label--link {
+
+  &:hover .material-icons.link{
+    color: main.$accent;
+  }
 }
 </style>
