@@ -45,6 +45,25 @@ a {
     position: relative;
 }
 
+/* 見出し */
+.h1-title {
+    &.quick-note {
+        font-family: quicksand, sans-serif;
+    }
+    &.art {
+        font-family: 'Kaisei Tokumin', serif;
+    }
+    &.quote {
+        font-family: 'Kiwi Maru','Noto Sans JP', serif;
+    }
+    &.gourmet {
+        font-family: otomanopee-one, sans-serif;
+    }
+}
+
+/* 見出し横矢印 */
+$arrow-length: 24px;
+
 /* button */
 %btn {
     border: 2px solid $main;

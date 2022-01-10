@@ -1,14 +1,16 @@
 <template>
 <div class="block">
 
+    <!-- タイトル -->
     <router-link class="router-link" :to="{name: 'ListView', params: {uid: uid, category: category}}">
-        <h1 class="block__title" :class="category">{{ categoryName(category) }}</h1>
+        <h1 class="block-title h1-title" :class="category">{{ getCategoryName(category) }}</h1>
     </router-link>
 
+    <!-- カードリスト -->
     <ul class="card-list">
-        <li v-for="doc in docs" :key="doc.id" class="card-item single">
+        <li v-for="(doc, idx) in docs" :key="doc.id" class="card-item single">
             <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category, goBack:true}}">
-                <SingleCard :doc="doc" :category="category"/>
+                <SingleCard :doc="doc" :category="category" :idx="idx"/>
             </router-link>
 
         </li>
@@ -19,6 +21,7 @@
 <script>
 import SingleCard from './SingleCard.vue'
 import getCollection from '@/composables/getCollection'
+import { getCategoryName } from '@/composables/functions'
 
 export default {
     components:{ SingleCard },
@@ -26,50 +29,71 @@ export default {
     setup(props) {
 
         const { documents: docs } = getCollection(`users/${props.uid}/${props.category}`)
-        
-        const categoryName = (category) => {
-            let titleValue
-            if (category === "quick-note") {
-                titleValue = "Quick Note"
-            } else if (category === "art") {
-                titleValue = "アート"
-            } else if (category === "quote") {
-                titleValue = "ことば"
-            } else if (category === "gourmet") {
-                titleValue = "グルメ・ファッション"
-            }
-            return titleValue
-       }
 
-       return { categoryName, docs }
+       return { getCategoryName, docs }
     }
 }
 
 </script>
 
 <style lang="scss">
+@use '/src/assets/sass/main';
+
+.block {
+    margin-top: 14px;
+}
 
 .router-link {
     color: inherit;
     text-decoration: none;
 }
 
-.block__title {
-    margin-left: 20px;
+.block-title.h1-title {
+    margin-left: 24px;
     display: inline-block;
+    position: relative;
+    padding-right: 8px;
+
+    &::before {
+        content: '';
+        // 位置
+        position: absolute;
+        top: 50% + 8;
+        left: 100%;
+
+        // 形状
+        width: main.$arrow-length;
+        height: 1px;
+        background: main.$bg-white;
+
+        transition: all 0.2s linear;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50% + 8;
+        right: 0 - main.$arrow-length;
+
+        width: 10px;
+        height: 1px;
+        background: main.$bg-white;
+        transform: rotate(35deg);
+        transform-origin: top right;
+
+        transition: all 0.2s linear;
+
+    }
+
+    // hover時の形状
+    &:hover::before {
+        width: main.$arrow-length + 15px;
+    }
+    &:hover::after {
+        right: 0 - main.$arrow-length - 15px;
+    }
 }
-.block__title.quick-note {
-    font-family: quicksand, sans-serif;
-}
-.block__title.art {
-    font-family: 'Kaisei Tokumin', serif;
-}
-.block__title.quote {
-    font-family: 'Kiwi Maru','Noto Sans JP', serif;
-}
-.block__title.gourmet {
-    font-family: otomanopee-one, sans-serif;
-}
+
 
 /* card container */
 .card-list {
@@ -79,6 +103,5 @@ export default {
     overflow-scrolling: touch;
     -webkit-overflow-scrolling: touch;
     cursor: pointer;
-    margin-bottom: 12px;
 }
 </style>

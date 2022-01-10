@@ -1,6 +1,10 @@
 <template>
 <Navbar />
-<div v-for="doc in docs" :key="doc.id">
+<router-link class="router-link" :to="{name: 'Home'}">
+    <p class="list-view h1-title" :class="category">ホームへ</p>
+</router-link>
+
+<div v-for="(doc, idx) in docs" :key="doc.id">
     
     <div class="list-item-container">
 
@@ -11,7 +15,11 @@
                 <p class="left__date">
                     {{ createdTime(doc.createdAt) }}
                 </p>
-                <div class="left__thumbnail">
+                <!-- 画像 -->
+                <div class="left__thumbnail" :style="{backgroundColor: bgColor(idx)}">
+                    <div v-if="!doc.downloadUrl">
+                        No Image
+                    </div>
                     <img :src="doc.downloadUrl" v-if="doc.downloadUrl">
                 </div>
                 <router-link class="router-link" :to="{name: 'Detail', params: {id: doc.id, uid: uid, category: category, goBack:false}}">
@@ -29,7 +37,7 @@
                             <span v-if="doc.year">({{doc.year}})</span>
                         </p>
                     </div>
-                    <a :href="doc.url" target="__blank" class="head__link">
+                    <a :href="doc.url" target="__blank" class="head__link" v-if="doc.url">
                         <span class="material-icons">link</span>
                     </a>
                 </div>
@@ -48,26 +56,83 @@
 import { format } from 'date-fns'
 import { ja } from 'date-fns/locale'
 import getCollection from '@/composables/getCollection'
-import Navbar from '@/components/Navbar.vue';
+import Navbar from '@/components/Navbar.vue'
+import { getCategoryName, getColor } from '@/composables/functions'
 
 export default {
     props: ["uid", "category"],
     components: { Navbar },
     setup(props) {
         
+        // let bgColor
         const { documents:docs } = getCollection(`users/${props.uid}/${props.category}`)
 
         const createdTime = (time) => {
             return format(time.toDate(), 'yyyy.MM.dd', {locale: ja})
         }
 
-        return { docs, createdTime }
+        const bgColor = (idx) => {
+            if (props.category !== 'quote') {
+                return getColor(idx)
+            } else {
+                return '#F9F7F0'
+            }
+        }
+
+        return { docs, createdTime, getCategoryName, bgColor }
     }
 }
 </script>
 
 <style lang="scss">
 @use '/src/assets/sass/main';
+
+.list-view.h1-title {
+    display: inline-block;
+    position: relative;
+    padding-left: 8px;
+    margin-left: 48px;
+    margin-top: 24px;
+
+    &::before {
+        content: '';
+        // 位置
+        position: absolute;
+        top: 50% + 8;
+        right: 100%;
+
+        // 形状
+        width: main.$arrow-length;
+        height: 1px;
+        background: main.$bg-white;
+
+        transition: all 0.2s linear;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50% + 8;
+        left: 0 - main.$arrow-length;
+
+        width: 10px;
+        height: 1px;
+        background: main.$bg-white;
+        transform: rotate(-35deg);
+        transform-origin: top left;
+
+        transition: all 0.2s linear;
+
+    }
+
+    // hover時の形状
+    &:hover::before {
+        width: main.$arrow-length + 15px;
+    }
+    &:hover::after {
+        left: 0 - main.$arrow-length - 15px;
+    }
+}
 
 $img-width: 100px;
 
@@ -95,16 +160,22 @@ $img-width: 100px;
 
 .left {
     &__thumbnail {
+        background: main.$bg-white;
         width: $img-width;
         height: $img-width;
         border-radius: 5px;
         overflow: hidden;
+        margin: 4px 0;
+        position: relative;
+        color: main.$primary;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &__edit {
         width: $img-width;
         text-align: center;
-        margin-top: 4px;
     }
 }
 
@@ -122,11 +193,13 @@ $img-width: 100px;
 
     &__title {
         font-weight: 300;
+        margin-right: 8px;
     }
 
     &__author {
         font-weight: 100;
         font-size: 12px;
+        // margin-top: 8px;
     }
 }
 
@@ -136,6 +209,9 @@ $img-width: 100px;
 
 /* PC layout */
 @media (min-width: 744px) {
+
+    $img-width: 130px;
+
     .list-item-container {
         padding: 0 16px;
     }
@@ -149,6 +225,25 @@ $img-width: 100px;
 
         &__left {
             flex: 1;
+            font-size: 14px;
+        }
+    }
+
+    .left {
+        &__thumbnail {
+
+            width: $img-width;
+            height: $img-width;
+        }
+
+        &__edit {
+            width: $img-width;
+        }
+    }
+
+    .head {
+        &__author {
+            font-size: 18px;
         }
     }
 }
