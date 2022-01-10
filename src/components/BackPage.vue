@@ -14,8 +14,9 @@ export default {
     setup(props) {
         const router = useRouter()
         const handleClick = () => {
+            console.log(props.goBack)
 
-            if (props.goBack === true) {
+            if (props.goBack === 'true') {
 
                 router.go(-1)
 

@@ -2,7 +2,7 @@
 <p class="card-item__date">
     {{ createdTime }}
 </p>
-<div class="card-item__img" :class="{hasImg: doc.downloadUrl}">
+<div class="card-item__img" :class="{hasImg: doc.downloadUrl}" :style="{backgroundColor: bgColor}">
     <img :src="doc.downloadUrl" v-if="doc.downloadUrl">
     <div class="caption">
         <blockquote class="caption__blockquote"
@@ -31,11 +31,14 @@
 import { format } from 'date-fns'
 import { computed } from '@vue/reactivity'
 import { ja } from 'date-fns/locale'
+import { getColor } from '@/composables/functions'
 
 export default {
-    props: ["doc", "category"],
+    props: ["doc", "category", "idx"],
     setup(props) {
         // console.log(props.doc)
+        let bgColor
+
         const createdTime = format(props.doc.createdAt.toDate(), 'yyyy.MM.dd', {locale: ja})
 
         const snippet = computed(() => {
@@ -46,7 +49,13 @@ export default {
             }
         })
 
-        return { createdTime, snippet }
+        if (props.category !== 'quote') {
+            bgColor = getColor(props.idx)
+        } else {
+            bgColor = '#F9F7F0'
+        }
+
+        return { createdTime, snippet, bgColor }
     }
 }
 </script>
