@@ -107,14 +107,6 @@ $card-width: 220px;
     }
 }
 
-.card-item__img img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-
 /* 画像の中のキャプション */
 .caption {
     position: absolute;

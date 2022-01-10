@@ -154,7 +154,7 @@
       </div>
 
     </form>
-  <BackPage />
+  <BackPage :goBack="goBack" :uid="uid" :category="category"/>
   </div>
 
 </template>
@@ -172,7 +172,7 @@ import useDocument from '../composables/useDocument';
 
 export default {
   components: { Toggle, BackPage },
-  props: ["id", "uid", "category"],
+  props: ["id", "uid", "category", "goBack"],
 
   setup(props) {
 

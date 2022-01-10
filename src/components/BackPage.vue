@@ -9,11 +9,21 @@
 import { useRouter } from 'vue-router'
 
 export default {
+    props:["goBack", "uid", "category"],
 
-    setup() {
+    setup(props) {
         const router = useRouter()
         const handleClick = () => {
-            router.go(-1)
+
+            if (props.goBack === true) {
+
+                router.go(-1)
+
+            } else {
+                console.log(props.uid)
+                router.push({name: 'ListView', params: {uid: props.uid, category: props.category}})
+
+            }
         }
 
         return { handleClick }
