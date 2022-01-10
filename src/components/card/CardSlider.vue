@@ -14,13 +14,16 @@
 </template>
 
 <script>
-import { format } from 'date-fns'
 import SingleCard from './SingleCard.vue'
+import getCollection from '@/composables/getCollection'
 
 export default {
     components:{ SingleCard },
     props: ["uid", "docs", "category"],
     setup(props) {
+
+        const { documents: docs } = getCollection(`users/${props.uid}/${props.category}`)
+        
         const categoryName = (category) => {
             let titleValue
             if (category === "quick-note") {
@@ -35,7 +38,7 @@ export default {
             return titleValue
        }
 
-       return { categoryName }
+       return { categoryName, docs }
     }
 }
 
