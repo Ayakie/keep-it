@@ -5,7 +5,9 @@
         <div class="header__left"></div>
         <div class="header__right">
             <p class="header__user">Hello, {{user.displayName}} !</p>
-            <button class="header__btn" @click="handleLogout">Logout</button>
+            <button class="header__btn" @click="handleLogout">
+                <span class="btn__description">Log out</span>
+            </button>
         </div>
       </div>
   </header>

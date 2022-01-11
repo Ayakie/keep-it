@@ -65,28 +65,60 @@ a {
 $arrow-length: 24px;
 
 /* button */
-%btn {
-    border: 2px solid $main;
-    padding: 10px 16px;
-    text-align: center;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto
+@mixin pseudo-before($color: $main) {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: $color;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-101%);
+    transition: all ease 0.2s;
 }
 
-.btn {
-    @extend %btn;
-
-    &__description {
-        display: inline-block;
-        line-height: 24px;
+/* button hover effect */
+%hover {
+    &::before {
+        @include pseudo-before($main)
     }
-
+    &:hover::before {
+        transform: translateX(0);
+    }
+    &:hover .btn__description{
+        color: $bg-white;
+    }
+}
+/* base button */
+.btn {
+    border: 2px solid $main;
+    padding: 10px 16px;
+    display: inline-block;
+    border-radius: 4px;
+    margin: auto;
+    position: relative;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    overflow: hidden;
+    
+    // ボタン内の span タグ文字
+    &__description {
+        line-height: 24px;
+        // なんで position: relative;必要なんだろ...
+        position: relative;
+        z-index: 10;
+    }
+    
     & > .material-icons {
         margin-right: 4px;
+        z-index: 10;
+        position: relative;
     }
+}
+
+/* Create.vue / LoginForm.vue */
+.btn--register, .btn--login {
+    @extend %hover;
 }
 
 /* 画像：親要素にフィットするように */
@@ -126,8 +158,16 @@ img {
         align-items: center;
     }
     &__btn {
-         @extend %btn;
-        display: inline;
+         @extend .btn;
+         @extend %hover;
+         border: 2px solid $line-color;
+         
+         &::before {
+             @include pseudo-before($line-color)
+         }
+         &:hover .btn__description{
+            color: $primary;
+        }
     }
     &__user {
         display: inline;
@@ -166,9 +206,9 @@ img {
 
 }
 
+/* Detail.vue */
 %__btn {
-    @extend %btn;
-    border: 2px solid $main;
+    @extend .btn;
     margin: 0 8px;
 }
 
@@ -176,25 +216,26 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    &__btn {
-        @extend %__btn;
-    
-        & > .material-icons {
-            margin-right: 4px;
-        }
+    overflow: visible;
+}
 
-        &--delete {
-            @extend %__btn;
-        }
+.btn--detail {
+    @extend .btn;
+    margin: 0 8px;
+    transition: all 0.3s;
     
-        &--update {
-            @extend %__btn;
-            color: $bg-white;
-            background-color: $main;
-        }
+    &:hover {
+        top: -2px;
+        box-shadow: 1px 2px 3px rgba(50,50,50,0.05);
+    }
+
+    &.update {
+        @extend %__btn;
+        color: $bg-white;
+        background-color: $main;
     }
 }
+
 
 /* form item */
 .form-item {

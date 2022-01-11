@@ -133,8 +133,12 @@
         </div>
       </div>
       <!-- end of the form -->
-
-      <button class="btn">登録する</button>
+      
+      <div class="btn-container">
+        <button class="btn btn--register">
+          <span class="btn__description">登録する</span>
+        </button>
+      </div>
     </form>
   <BackPage :goBack="'Home'"/>
   </div>

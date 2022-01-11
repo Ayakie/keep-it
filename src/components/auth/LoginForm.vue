@@ -9,7 +9,11 @@
       <!-- social auth -->
       <div id="firebaseui-auth-container"></div>
       <div class="error"> {{ error }} </div>
-      <button class="btn">Log in</button>
+      <div class="btn-container">
+        <button class="btn btn--login">
+          <span class="btn__description">Log in</span>
+        </button>
+      </div>
   </form>
 </template>
 
@@ -38,6 +42,6 @@ export default  {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 </style>
