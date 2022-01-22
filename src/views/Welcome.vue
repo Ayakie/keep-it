@@ -1,8 +1,11 @@
 <template>
   <div class="form-container">
       <h2 class="form-container__title">Wecome...</h2>
-      <LoginForm v-if="showLogin" @login="enterHome"/>
-      <SignupForm v-if="!showLogin" @signup="enterHome"/>
+
+      <transition name="fade" mode="out-in">
+        <LoginForm v-if="showLogin" @login="enterHome"/>
+        <SignupForm v-else @signup="enterHome"/>
+      </transition>
 
       <div class="form-container__account" v-if="showLogin">
         <p>No account yet ?</p>
@@ -71,5 +74,10 @@ export default {
         transform: scaleX(1);
     }
 }
-
+.fade-enter-from, .fade-leave-to {
+    opacity: 0;
+}
+.fade-enter-active, .fade-leave-active {
+    transition: all 0.3s ease;
+}
 </style>

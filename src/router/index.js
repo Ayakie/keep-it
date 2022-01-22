@@ -14,7 +14,8 @@ const routes = [
     {
         path: '/home',
         name: 'Home',
-        component: Home
+        component: Home,
+        meta: { transition: 'slide-left' }
     },
     {
         path: '/create',
@@ -32,7 +33,8 @@ const routes = [
         path: '/view/:category',
         name: 'ListView',
         component: ListView,
-        props: true
+        props: true,
+        meta: { transition: 'slide-right'}
     }
 ]
 
