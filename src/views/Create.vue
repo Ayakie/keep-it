@@ -4,12 +4,16 @@
       <!-- category -->
       <div class="form-item">
         <p class="form-item__label">カテゴリ</p>
+        <!-- <v-select :options="categories" taggable push-tag v-model="category"/>
+
+        {{ category }} -->
+        
+
         <div class="form-item__select-box">
-          <select name="" id="" v-model="category" @change="bodyErrors = []">
-            <option value="quick-note" selected>Quick Note</option>
-            <option value="art">アート</option>
-            <option value="quote">ことば</option>
-            <option value="gourmet">グルメ・ファッション</option>
+          <select v-model="category" @change="bodyErrors = []">
+            <option v-for="cat in categories" :key="cat" :value="cat.code">
+              {{ cat.label }}
+            </option>
           </select>
         </div>
       </div>
@@ -154,10 +158,11 @@ import useCollection from "@/composables/useCollection";
 import { timestamp } from "@/firebase/config";
 import DataClass from "@/composables/makeData";
 import { useRouter } from 'vue-router';
-import BackPage from"@/components/BackPage.vue"
+import BackPage from"@/components/BackPage.vue";
+import vSelect from "vue-select";
 
 export default {
-  components: { Toggle, BackPage },
+  components: { Toggle, BackPage, vSelect },
   props: ["uid"],
 
   setup(props) {
@@ -169,13 +174,19 @@ export default {
     const bodyErrors = ref([]);
     const url = ref("");
     const area = ref(null);
-    const category = ref("quick-note");
     const file = ref(null); //アップロードファイル
     const fileErrors = ref([]);
     const { url: downloadUrl, filePath, error: uploadError, uploadImg } = useStorage();
     const { error: addError, _addDoc } = useCollection();
     const router = useRouter();
-    const toggle = ref(false)
+    const toggle = ref(false);
+    const category = ref('quick-note');
+    const categories = ref([
+      { label: 'Quick Note', code: 'quick-note' },
+      { label: 'アート', code: 'art' },
+      { label: 'ことば', code: 'quote' },
+      { label: 'グルメ・ファッション', code: 'gourmet'}
+      ])
 
     // resize textarea
     const resize = () => {
@@ -272,7 +283,7 @@ export default {
     };
 
     return {
-      category,
+      category, categories,
       title,
       author,
       year,
@@ -288,4 +299,7 @@ export default {
 </script>
 
 <style src="@vueform/toggle/themes/default.css">
+.vs__dropdown-menu {
+  z-index: 100;
+}
 </style>

@@ -3,7 +3,7 @@
     <Navbar />
     <Bottombar :uid="user.uid" v-if="user"/>
     <div v-for="(category, idx) in categories" :key="category">
-        <CardSlider :uid="user.uid" :category="category" v-if="user"/>
+        <CardSlider :uid="user.uid" :category="category" v-if="categories.length && user"/>
     </div>
 </div>
 </template>

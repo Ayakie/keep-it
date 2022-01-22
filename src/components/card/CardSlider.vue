@@ -3,7 +3,9 @@
 
     <!-- タイトル -->
     <router-link class="router-link" :to="{name: 'ListView', params: {uid: uid, category: category}}">
-        <h1 class="block-title h1-title" :class="category">{{ getCategoryName(category) }}</h1>
+        <h1 class="block-title h1-title" :class="category" v-if="docs.length">
+            {{ getCategoryName(category) }}
+        </h1>
     </router-link>
 
     <!-- カードリスト -->

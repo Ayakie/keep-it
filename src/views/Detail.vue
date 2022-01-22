@@ -171,6 +171,7 @@ import { useRouter } from 'vue-router';
 import BackPage from '@/components/BackPage.vue'
 import getDocument from '../composables/getDocument';
 import useDocument from '../composables/useDocument';
+import useCollection from "../composables/useCollection";
 
 export default {
   components: { Toggle, BackPage },
@@ -198,6 +199,7 @@ export default {
     const path = `users/${props.uid}/${props.category}/${props.id}`
     const { error: fetchError, document, _getDoc } = getDocument(path)
     const { error: updateError, _updateDoc, _deleteDoc } = useDocument(path)
+    const { _addDoc } = useCollection()
 
     // retrieve data from firestore
     const setupValue = (async () => {
@@ -286,9 +288,15 @@ export default {
       }
 
       // データ更新
-      if (!fileErrors.value.length && !bodyErrors.value.length) {
+      if (!fileErrors.value.length && !bodyErrors.value.length && category.value === props.category) {
 
           await _updateDoc(data.dataMap)
+
+      } else if (!fileErrors.value.length && !bodyErrors.value.length && category.value !== props.category) {
+        
+        // カテゴリが変更になった場合はdoc削除 & 新しくdoc追加
+        await _deleteDoc()
+        await _addDoc(`users/${props.uid}/${category.value}`, data.dataMap)
       }
 
       if (!updateError.value && !fileErrors.value.length && !bodyErrors.value.length) {
