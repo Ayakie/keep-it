@@ -1,7 +1,6 @@
 <template>
 <div class="back" @click="handleClick">
-  <span class="material-icons back">arrow_back_ios_new</span>
-  <p class="back__description">戻る</p>
+  <span class="back__description">戻る</span>
 </div>
 </template>
 
@@ -39,8 +38,26 @@ export default {
 .material-icons.back {
     position: absolute;
     right: 51%;
+    top: 0;
     transform: translateX(-50%);
     transition: all 0.2s linear;
+}
+
+.back__description {
+    position: relative;
+    line-height: 24px;
+
+    &::before {
+        font-family: 'Material Icons';
+        content: '\e2ea';
+        vertical-align: middle;
+        font-size: 22px;
+        position: absolute;
+        left: -25px;
+        top: 0px;
+        transition: all 0.2s linear;
+    }
+
 }
 
 .back {
@@ -50,12 +67,8 @@ export default {
     cursor: pointer;
     color: main.$main;
 
-    &__description {
-        line-height: 24px;
-    }
-
-    &:hover .material-icons.back {
-        right: 52%;
+    &:hover .back__description::before {
+        left: -30px;
     }
 }
 </style>

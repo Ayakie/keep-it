@@ -28,5 +28,8 @@ export default {
 <style lang="scss" scoped>
 @use '@/assets/css/main';
 
+html, div {
+    overflow-y: auto;
+}
 
 </style>

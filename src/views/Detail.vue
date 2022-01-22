@@ -1,5 +1,6 @@
 <template>
   <div class="form-container">
+
     <form action="" class="form">
       <!-- ======= common ======== -->
       <div class="form-item">
@@ -155,7 +156,7 @@
       </div>
 
     </form>
-  <BackPage :goBack="goBack" :uid="uid" :category="category"/>
+    <BackPage :goBack="goBack" :uid="uid" :category="category"/>
   </div>
 
 </template>
@@ -371,8 +372,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @use '/src/assets/css/main';
+
+html, div {
+  overflow-y: auto;
+}
 
 .material-icons.link {
   margin-right: 4px;
