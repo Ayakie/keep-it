@@ -43,8 +43,16 @@ export default {
 
 <style lang="scss" scoped>
 @use '../assets/css/main';
-.form-container__title {
-    margin-bottom: 24px;
+
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &__title {
+        margin-bottom: 24px;
+    }
 }
 .form-container__account {
     text-align: center;
