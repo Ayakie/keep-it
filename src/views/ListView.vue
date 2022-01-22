@@ -4,9 +4,7 @@
     <p class="list-view h1-title" :class="category">ホームへ</p>
 </router-link>
 
-<div v-for="(doc, idx) in docs" :key="doc.id">
-    
-    <div class="list-item-container">
+<div v-for="(doc, idx) in docs" :key="doc.id" class="list-item-container">
 
         <div class="list-item">
             <!-- 左 -->
@@ -47,7 +45,6 @@
             </div>
         </div>
         <!-- list-item ここまで -->
-    </div>
 
   </div>
 </template>
@@ -86,6 +83,10 @@ export default {
 
 <style lang="scss">
 @use '/src/assets/css/main';
+
+html, div {
+    overflow-y: auto;
+}
 
 .list-view.h1-title {
     display: inline-block;
@@ -138,13 +139,15 @@ $img-width: 100px;
 
 .list-item-container {
     @extend %container;
-    margin-top: 24px;
+    margin: 12px auto;
 }
 
 .list-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1pt solid main.$line-color;
+    padding-bottom: 8pt;
 
     &__right {
         text-align: center;
