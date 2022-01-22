@@ -4,7 +4,7 @@ import { projectAuth } from './firebase/config'
 import App from './App.vue'
 
 import '/node_modules/ress/ress.css'
-import './assets/sass/main.scss'
+import './assets/css/main.scss'
 import router from './router'
 
 let app

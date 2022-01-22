@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use '/src/assets/sass/main';
+@use '/src/assets/css/main';
 
 .block {
     margin-top: 14px;

@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use '../assets/sass/main';
+@use '../assets/css/main';
 
 .material-icons.back {
     position: absolute;

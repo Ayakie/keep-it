@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use 'src/assets/sass/main.scss';
+@use 'src/assets/css/main.scss';
 $line-height : 56px;
 $circle-width : 56px;
 
@@ -59,20 +59,6 @@ $circle-width : 56px;
     cursor: pointer;
     overflow: hidden;
     transition: all 0.2s ease;
-
-    // &::before {
-    //     content: '';
-    //     position: absolute;
-    //     top: 0;
-    //     left: 0;
-    //     height: $circle-width + 2;
-    //     width: $circle-width + 2;
-    //     border-radius: 50%;
-    //     transform: translateX(-100%);
-    //     background: main.$main;
-    //     transition: all 0.2s linear;
-    //     z-index: -1;
-    // }
 
     &:hover, &:active {
         top: -2px;

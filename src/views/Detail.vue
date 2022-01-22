@@ -372,7 +372,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use '/src/assets/sass/main';
+@use '/src/assets/css/main';
 
 .material-icons.link {
   margin-right: 4px;

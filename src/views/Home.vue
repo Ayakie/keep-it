@@ -3,7 +3,7 @@
     <Navbar />
     <Bottombar :uid="user.uid" v-if="user"/>
     <div v-for="(category, idx) in categories" :key="category">
-        <CardSlider :uid="user.uid" :category="category"/>
+        <CardSlider :uid="user.uid" :category="category" v-if="user"/>
     </div>
 </div>
 </template>
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/sass/main';
+@use '@/assets/css/main';
 
 
 </style>

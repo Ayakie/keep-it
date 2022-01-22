@@ -10,7 +10,7 @@
         >
             <p> {{ snippet }} </p>
 
-            <!-- <img src="../../assets/quotation.svg" alt="" srcset=""> -->
+            <!-- <img src="../../assets/image/quotation.svg" alt="" srcset=""> -->
         </blockquote>
         <p class="caption__author">
             {{doc.author }}
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss">
-@use '/src/assets/sass/main';
+@use '/src/assets/css/main';
 
 /* single card */
 $card-width: 220px;
@@ -144,7 +144,7 @@ $card-width: 220px;
         &::before {
             content: "";
             background-color: main.$secondary;
-            mask: url("../../assets/quotation.svg");
+            mask: url("../../assets/image/quotation.svg");
             // 画像の大きさ
             display: inline-block;
             height: 1rem;
@@ -160,7 +160,7 @@ $card-width: 220px;
         &::after {
             content: "";
             background-color: main.$secondary;
-            mask: url("../../assets/quotation.svg");
+            mask: url("../../assets/image/quotation.svg");
             // 画像の大きさ
             display: inline-block;
             height: 1rem;

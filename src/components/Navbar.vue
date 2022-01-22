@@ -42,6 +42,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '../assets/sass/main';
+@use '../assets/css/main';
 
 </style>
