@@ -1,6 +1,8 @@
 <template>
+  <div class="loading-container" v-if="isPending">
+    <Loading />
+  </div>
   <div class="form-container">
-
     <form action="" class="form">
       <!-- ======= common ======== -->
       <div class="form-item">
@@ -172,9 +174,10 @@ import BackPage from '@/components/BackPage.vue'
 import getDocument from '../composables/getDocument';
 import useDocument from '../composables/useDocument';
 import useCollection from "../composables/useCollection";
+import Loading from "../components/Loading.vue";
 
 export default {
-  components: { Toggle, BackPage },
+  components: { Toggle, BackPage, Loading },
   props: ["id", "uid", "category", "goBack"],
 
   setup(props) {
@@ -189,7 +192,7 @@ export default {
     const category = ref(props.category);
     const file = ref(null); //アップロードファイル
     const fileErrors = ref([]);
-    const { url: downloadUrl, filePath, error: uploadError, uploadImg } = useStorage();
+    const { url: downloadUrl, filePath, error: uploadError, uploadImg, isPending } = useStorage();
     const router = useRouter();
     const toggle = ref(false);
     const toggleLabel = ref("")
@@ -302,6 +305,7 @@ export default {
       if (!updateError.value && !fileErrors.value.length && !bodyErrors.value.length) {
 
           console.log('data updated')
+          isPending.value = false
           router.push({ name: 'Home' })
 
       }
@@ -374,7 +378,7 @@ export default {
       handleUpdate, handleDelete,
       fileChange,
       fileErrors, toggle,
-      document
+      document, isPending
     };
   },
 };

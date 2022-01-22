@@ -106,12 +106,10 @@ $arrow-length: 24px;
         line-height: 24px;
         // なんで position: relative;必要なんだろ...
         position: relative;
-        z-index: 10;
     }
     
     & > .material-icons {
         margin-right: 4px;
-        z-index: 10;
         position: relative;
     }
 }
@@ -295,6 +293,16 @@ img {
     color: $warning;
     font-size: 15px;
 }
+
+
+/* loading */
+.loading-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 
 /* PC layout */
 @media (min-width: 744px) {

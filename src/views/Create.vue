@@ -1,4 +1,7 @@
 <template>
+  <div class="loading-container" v-if="isPending">
+    <Loading />
+  </div>
   <div class="form-container">
     <form action="" class="form" @submit.prevent="addData">
       <!-- category -->
@@ -7,7 +10,6 @@
         <!-- <v-select :options="categories" taggable push-tag v-model="category"/>
 
         {{ category }} -->
-        
 
         <div class="form-item__select-box">
           <select v-model="category" @change="bodyErrors = []">
@@ -160,9 +162,10 @@ import DataClass from "@/composables/makeData";
 import { useRouter } from 'vue-router';
 import BackPage from"@/components/BackPage.vue";
 import vSelect from "vue-select";
+import Loading from "../components/Loading.vue";
 
 export default {
-  components: { Toggle, BackPage, vSelect },
+  components: { Toggle, BackPage, vSelect, Loading },
   props: ["uid"],
 
   setup(props) {
@@ -176,7 +179,7 @@ export default {
     const area = ref(null);
     const file = ref(null); //アップロードファイル
     const fileErrors = ref([]);
-    const { url: downloadUrl, filePath, error: uploadError, uploadImg } = useStorage();
+    const { url: downloadUrl, filePath, error: uploadError, uploadImg, isPending } = useStorage();
     const { error: addError, _addDoc } = useCollection();
     const router = useRouter();
     const toggle = ref(false);
@@ -255,6 +258,7 @@ export default {
       // ホームへリダイレクト
       if (!addError.value && !fileErrors.value.length && !bodyErrors.value.length) {
 
+        isPending.value = false
         console.log('data added')
         router.push({ name: 'Home' })
 
@@ -293,6 +297,7 @@ export default {
       addData,
       fileChange,file,
       fileErrors, toggle,
+      isPending
     };
   },
 };
