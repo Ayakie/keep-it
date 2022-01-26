@@ -94,7 +94,7 @@ $card-width: 220px;
         height: $img-width * 1.1;
         width: $img-width;
         border-radius: 5px;
-        box-shadow: 3px 3px 3px rgba($color: #000000, $alpha: 0.7);
+        box-shadow: 2px 5px 3px rgba($color: #000000, $alpha: 0.7);
         overflow: hidden;
     }
     
@@ -188,6 +188,25 @@ $card-width: 220px;
     &:hover .caption {
         opacity: 1;
         background: rgba($color: #000000, $alpha: 0.5);
+    }
+}
+
+@media (min-width: 744px) {
+    $card-width: 330px;
+    $img-width: 300px;
+    .card-item {
+        width: $card-width;
+        height: $card-width * 1.15;
+
+        &__img {
+            left: $card-width - $img-width;
+            height: $img-width * 1.1;
+            width: $img-width;
+        }
+
+        &__title {
+            right: $img-width / 2;
+        }
     }
 }
 

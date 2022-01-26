@@ -1,5 +1,4 @@
 <template>
-<div class="block">
 
     <!-- タイトル -->
     <router-link class="router-link" :to="{name: 'ListView', params: {uid: uid, category: category}}">
@@ -17,7 +16,6 @@
 
         </li>
     </ul>
-</div>
 </template>
 
 <script>
@@ -41,9 +39,6 @@ export default {
 <style lang="scss">
 @use '/src/assets/css/main';
 
-.block {
-    margin-top: 14px;
-}
 
 .router-link {
     color: inherit;

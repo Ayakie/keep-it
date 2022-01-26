@@ -2,7 +2,7 @@
 <div class="home-page">
     <Navbar />
     <Bottombar :uid="user.uid" v-if="user"/>
-    <div v-for="(category, idx) in categories" :key="category">
+    <div class="block" v-for="(category, idx) in categories" :key="category">
         <CardSlider :uid="user.uid" :category="category" v-if="categories.length && user"/>
     </div>
 </div>
@@ -31,5 +31,9 @@ export default {
 html, div {
     overflow-y: auto;
 }
+
+// .block {
+//     margin-top: 14px;
+// }
 
 </style>

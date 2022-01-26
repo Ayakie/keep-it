@@ -14,7 +14,7 @@
                     {{ createdTime(doc.createdAt) }}
                 </p>
                 <!-- 画像 -->
-                <div class="left__thumbnail" :style="{backgroundColor: bgColor(idx)}">
+                <div class="left__thumbnail" :style="{backgroundColor: bgColor(idx)}"  v-if="category !== 'quote'">
                     <div v-if="!doc.downloadUrl">
                         No Image
                     </div>
@@ -39,9 +39,9 @@
                         <span class="material-icons">link</span>
                     </a>
                 </div>
-                <div class="right__body">
+                <span class="right__body">
                     {{doc.body}}
-                </div>
+                </span>
             </div>
         </div>
         <!-- list-item ここまで -->
@@ -151,7 +151,7 @@ $img-width: 100px;
 
     &__right {
         text-align: center;
-        flex: 2;
+        flex: 2.2;
     }
 
     &__left {
@@ -162,6 +162,11 @@ $img-width: 100px;
 }
 
 .left {
+    &__date {
+        display: inline-block;
+        width: $img-width;
+        text-align: center;
+    }
     &__thumbnail {
         background: main.$bg-white;
         width: $img-width;
@@ -205,6 +210,9 @@ $img-width: 100px;
 .right {
     &__body {
         font-weight: 300;
+        display: inline-block;
+        margin: 0 auto;
+        text-align: left;
     }
 }
 
@@ -260,6 +268,9 @@ $img-width: 100px;
     }
 
     .left {
+        &__date {
+            width: $img-width;
+    }
         &__thumbnail {
 
             width: $img-width;
