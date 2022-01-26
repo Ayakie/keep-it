@@ -1,6 +1,10 @@
 <template>
 <div class="back" @click="handleClick">
-  <span class="back__description">戻る</span>
+  <span class="back__description">
+      <slot>
+          戻る
+      </slot>
+    </span>
 </div>
 </template>
 

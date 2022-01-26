@@ -1,7 +1,7 @@
 <template>
 <div class="not-found">
     <img src="@/assets/image/not-found.svg" alt="">
-    <BackPage :goBack="'Home'"/>
+    <BackPage :goBack="'Home'">ホームに戻る</BackPage>
 </div>
 </template>
 
